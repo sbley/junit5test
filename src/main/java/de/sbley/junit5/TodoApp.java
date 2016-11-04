@@ -19,4 +19,11 @@ public class TodoApp {
         return todos;
     }
 
+    public void remove(Todo todo) {
+        if (todos.contains(todo))
+            todos.remove(todo);
+        else
+            throw new IllegalArgumentException("Invalid todo");
+    }
+
 }
