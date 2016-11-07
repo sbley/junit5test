@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -15,10 +16,17 @@ import org.junit.runner.RunWith;
 @RunWith(JUnitPlatform.class)
 public class TodoAppTest {
 
+    private Todo todo;
+    private TodoApp todoApp;
+
+    @BeforeEach
+    public void setup() {
+        todo = new Todo("Learn JUnit5", LocalDate.of(2016, Month.NOVEMBER, 14));
+        todoApp = new TodoApp();
+    }
+
     @Test
     public void addTodo() {
-        Todo todo = new Todo("Learn JUnit5", LocalDate.of(2016, Month.NOVEMBER, 14));
-        TodoApp todoApp = new TodoApp();
 
         // test
         todoApp.addTodo(todo);
@@ -36,8 +44,6 @@ public class TodoAppTest {
 
     @Test
     public void removeTodo() {
-        Todo todo = new Todo("Learn JUnit5", LocalDate.of(2016, Month.NOVEMBER, 14));
-        TodoApp todoApp = new TodoApp();
         todoApp.addTodo(todo);
 
         // test
@@ -49,7 +55,6 @@ public class TodoAppTest {
 
     @Test
     public void removeTodo_throwExceptionIfTodoIsNotInList() {
-        Todo todo = new Todo("Learn JUnit5", LocalDate.of(2016, Month.NOVEMBER, 14));
         TodoApp todoApp = new TodoApp();
 
         // test & assert
