@@ -9,11 +9,14 @@ import java.time.Month;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 @RunWith(JUnitPlatform.class)
+@DisplayName("⭐️ Todo App ⭐️")
 public class TodoAppTest {
 
     private Todo todo;
@@ -26,6 +29,7 @@ public class TodoAppTest {
     }
 
     @Test
+    @DisplayName("Should add todo to list")
     public void addTodo() {
 
         // test
@@ -42,25 +46,31 @@ public class TodoAppTest {
         });
     }
 
-    @Test
-    public void removeTodo() {
-        todoApp.addTodo(todo);
+    @Nested
+    @DisplayName("Remove todo")
+    class RemoveTodo {
+        @Test
+        @DisplayName("Todo list should be empty after deleting last todo")
+        public void removeTodo() {
+            todoApp.addTodo(todo);
 
-        // test
-        todoApp.remove(todo);
-
-        // assert
-        assertEquals(0, todoApp.getTodoList().size());
-    }
-
-    @Test
-    public void removeTodo_throwExceptionIfTodoIsNotInList() {
-        TodoApp todoApp = new TodoApp();
-
-        // test & assert
-        IllegalArgumentException exception = expectThrows(IllegalArgumentException.class, () -> {
+            // test
             todoApp.remove(todo);
-        });
-        assertEquals("Invalid todo", exception.getMessage());
+
+            // assert
+            assertEquals(0, todoApp.getTodoList().size());
+        }
+
+        @Test
+        @DisplayName("Should throw exception when deleting unknown todo")
+        public void removeTodo_throwExceptionIfTodoIsNotInList() {
+            TodoApp todoApp = new TodoApp();
+
+            // test & assert
+            IllegalArgumentException exception = expectThrows(IllegalArgumentException.class, () -> {
+                todoApp.remove(todo);
+            });
+            assertEquals("Invalid todo", exception.getMessage());
+        }
     }
 }
