@@ -9,8 +9,6 @@ import java.time.Month;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -28,7 +26,6 @@ public class TodoAppTest {
     }
 
     @Test
-    @DisplayName("⭐️ Ein Todo hinzufügen ⭐️")
     public void addTodo() {
 
         // test
@@ -46,7 +43,6 @@ public class TodoAppTest {
     }
 
     @Test
-    @DisplayName("Todo list should be empty after deleting last todo")
     public void removeTodo() {
         todoApp.addTodo(todo);
 
@@ -58,7 +54,6 @@ public class TodoAppTest {
     }
 
     @Test
-    @Disabled("Takes ages, we have to fix that")
     public void removeTodo_throwExceptionIfTodoIsNotInList() {
         TodoApp todoApp = new TodoApp();
 
