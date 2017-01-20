@@ -12,8 +12,8 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.IncludeEngines;
 import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
