@@ -67,6 +67,8 @@ public class TodoAppTest {
 
             // assert
             assertEquals(0, todoApp.getTodoList().size());
+
+            assertThat(todoApp.getTodoList()).isEmpty();
         }
 
         @Test
