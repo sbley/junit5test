@@ -1,5 +1,6 @@
 package de.sbley.junit5;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -7,11 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.stream.Stream;
 
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestReporter;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
@@ -28,10 +34,10 @@ public class TodoAppTest {
         todoApp = new TodoApp();
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("Should add todo to list")
-    public void addTodo() {
-
+    @MethodSource(names = "todoProvider")
+    public void addTodo(Todo todo) {
         // test
         todoApp.addTodo(todo);
 
@@ -39,11 +45,13 @@ public class TodoAppTest {
         List<Todo> todos = todoApp.getTodoList();
         assertEquals(1, todos.size(), () -> "todo list should contain 1 element");
 
-        assertAll("todo item should contain correct values", () -> {
-            assertEquals("Learn JUnit5", todos.get(0).getTitle());
-        }, () -> {
-            assertEquals(LocalDate.of(2016, Month.NOVEMBER, 14), todos.get(0).getDueDate());
+        assertAll("todo list should contain correct item", () -> {
+            assertEquals(todo, todos.get(0));
         });
+    }
+
+    static Stream<Todo> todoProvider() {
+        return Stream.of(new Todo("Clean the room", LocalDate.now().plusYears(1)), new Todo("懇親会", LocalDate.now()));
     }
 
     @Nested
@@ -67,7 +75,7 @@ public class TodoAppTest {
             TodoApp todoApp = new TodoApp();
 
             // test & assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
                 todoApp.remove(todo);
             });
             assertEquals("Invalid todo", exception.getMessage());
